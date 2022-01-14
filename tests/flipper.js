@@ -22,7 +22,7 @@ describe('flipper', () => {
       signers: [baseAccount],
     }); //Create RPC Closed
     const account = await program.account.dataAccount.fetch(baseAccount.publicKey);
-    console.log('Flip 1: ', account.result)
+    console.log('Flip 1: ', account.results)
     assert.ok(account.result);
     _baseAccount = baseAccount;
   });// Create flipper test closed
