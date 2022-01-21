@@ -48,19 +48,19 @@ function App() {
       /* interact with the program via rpc */
       await program.rpc.initialize({
         accounts: {
-          dataAccount: baseAccount.publicKey,
+          switchAccount: baseAccount.publicKey,
           user: provider.wallet.publicKey,
           systemProgram: SystemProgram.programId,
         },
         signers: [baseAccount]
       });
 
-      const account = await program.account.dataAccount.fetch(baseAccount.publicKey);
+      const account = await program.account.switchAccount.fetch(baseAccount.publicKey);
       console.log('dataAccount pub key: ', baseAccount.publicKey.toBase58())
       console.log('user pub key: ', provider.wallet.publicKey.toBase58())
       console.log('program id: ', SystemProgram.programId.toBase58())
       console.log('account: ', account);
-      setValue(account.result.toString());
+      setValue(account.state.toString());
     } catch (err) {
       console.log("Transaction error: ", err);
     }
@@ -71,13 +71,13 @@ function App() {
     const program = new Program(idl, programID, provider);
     await program.rpc.flip({
       accounts: {
-        dataAccount: baseAccount.publicKey
+        switchAccount: baseAccount.publicKey
       }
     });
 
-    const account = await program.account.dataAccount.fetch(baseAccount.publicKey);
+    const account = await program.account.switchAccount.fetch(baseAccount.publicKey);
     console.log('account: ', account);
-    setValue(account.result.toString());
+    setValue(account.state.toString());
   }
 
   if (!wallet.connected) {
